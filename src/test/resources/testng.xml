@@ -1,0 +1,53 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="REST API Test Suite" parallel="none" thread-count="5">
+
+	<listeners>
+		<listener
+			class-name="org.testng.reporters.EmailableReporter2" />
+	</listeners>
+
+	<test name="GET Test">
+		<classes>
+			<class name="io.educative.api.tests.TestGET">
+			</class>
+		</classes>
+	</test>
+
+	<test name="POST Test">
+		<classes>
+			<class name="io.educative.api.tests.TestPOST">
+			</class>
+		</classes>
+	</test>
+
+	<test name="DELETE Test">
+		<classes>
+			<class name="io.educative.api.tests.TestDelete">
+			</class>
+		</classes>
+	</test>
+
+
+	<test name="Authentication Test">
+		<classes>
+			<class name="io.educative.api.tests.TestAuthentication">
+			</class>
+		</classes>
+	</test>
+
+	<test name="Hamcrest Matchers Test">
+		<classes>
+			<class name="io.educative.api.tests.TestHamcrestMatchers">
+			</class>
+		</classes>
+	</test>
+
+	<test name="Async API Test">
+		<classes>
+			<class name="io.educative.api.tests.TestAsyncAPI">
+			</class>
+		</classes>
+	</test>
+
+</suite>  

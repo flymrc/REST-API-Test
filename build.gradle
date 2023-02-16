@@ -1,0 +1,68 @@
+plugins {
+    id 'java'
+    id 'eclipse'
+    id 'idea'
+    id 'io.qameta.allure' version '2.8.1'
+}
+
+repositories {
+    jcenter()
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+dependencies {
+    compile 'io.rest-assured:rest-assured:4.3.0'
+    compile 'org.testng:testng:7.1.0'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.10.3'    
+    compile 'org.asynchttpclient:async-http-client:2.12.0'	
+    compile('io.qameta.allure:allure-testng:2.13.2') {
+    	exclude group: 'org.testng', module: 'testng'
+    }
+    compile 'io.qameta.allure:allure-rest-assured:2.13.2'
+    compile 'com.jayway.jsonpath:json-path:2.4.0'
+    compile 'ch.qos.logback:logback-classic:1.2.3'
+    compile 'org.apache.commons:commons-lang3:3.9'   
+    
+    compile 'org.projectlombok:lombok:1.18.12'
+    
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    
+    testImplementation 'org.springframework.boot:spring-boot-starter-web:2.5.0' 
+    testImplementation 'org.springframework.boot:spring-boot-starter-security:2.5.0'
+}
+
+test {
+    useTestNG() {
+        suites "src/test/resources/${System.getProperty('suiteXmlFile', 'testng.xml')}"
+    }
+
+    testLogging.showStandardStreams = true
+    systemProperties System.properties
+
+    finalizedBy 'downloadAllure', 'allureReport'
+}
+
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+allure {
+    autoconfigure = true
+    aspectjweaver = true
+    clean = true
+
+    version = '2.13.2'
+    resultsDir = file('test-output/allure-results')
+    reportDir = file('test-output/allure-reports')
+
+    downloadLink = "https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/${allure.version}/allure-commandline-${allure.version}.zip"
+}
